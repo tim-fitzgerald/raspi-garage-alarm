@@ -96,13 +96,6 @@ def init_sensors():
     for sensor in SENSORS:
         sensor['status'] = check_sensor(sensor['pin'])
 
-@app.route("/", methods=["POST"])
-@validate_twilio_request
-def index():
-    global ARMED
-    print(ARMED)
-    return "OK"
-
 
 @app.route("/start", methods=["POST"])
 @validate_twilio_request
