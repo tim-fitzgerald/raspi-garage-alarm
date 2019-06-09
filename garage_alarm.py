@@ -91,6 +91,11 @@ def validate_twilio_request(f):
     return decorated_function
 
 
+@app.before_first_request
+def init_sensors():
+    for sensor in SENSORS:
+        sensor['status'] = check_sensor(sensor['pin'])
+
 @app.route("/", methods=["POST"])
 @validate_twilio_request
 def index():
@@ -131,7 +136,6 @@ def sms():
     number = request.form["From"].lower()
     message_body = request.form["Body"].lower()
 
-    print(number)
     if number not in approved_numbers.values():
         print("Number not permitted")
 
@@ -141,10 +145,13 @@ def sms():
         return redirect(url_for("stop"))
     elif message_body == "state":
         resp = MessagingResponse()
+        states = ""
+        for sens in SENSORS:
+            states += sens['name'] + ": " + sens['status'] + "\n"
         if ARMED:
-            resp.message(str("Armed"))
+            resp.message(str("Armed" + "\n" + states))
         else:
-            resp.message(str("Disarmed"))
+            resp.message(str("Disarmed" + "\n" + states))
         return str(resp)
     else:
         print("Invalid Option")
