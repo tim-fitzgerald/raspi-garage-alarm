@@ -34,8 +34,8 @@ for s in SENSORS:
 
 ARMED = False
 
-isOpen = None
-oldIsOpen = None
+#isOpen = None
+#oldIsOpen = None
 
 with open("numbers.json") as json_config:
     approved_numbers = json.load(json_config)
@@ -52,7 +52,7 @@ def check_sensor(sensor):
 
 def send_alert(sensor):
     message = client.messages.create(
-        to=alarm_num,
+        to=alarm_number,
         from_=twilio_number,
         body="Garage Alarm Triggered on sensor " + sensor["name"],
     )
