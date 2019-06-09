@@ -154,8 +154,9 @@ def sms():
             resp.message(str("Disarmed" + "\n" + states))
         return str(resp)
     else:
-        print("Invalid Option")
-        return redirect(url_for("index"))
+        resp = MessagingResponse()
+        resp.message("Not a valid option!")
+        return str(resp)
 
 
 if __name__ == "__main__":
