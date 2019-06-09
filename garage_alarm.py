@@ -1,15 +1,16 @@
 #!/usr/bin/python3
-from itertools import cycle
-from flask import abort, Flask, request, render_template, redirect, url_for
-from functools import wraps
-from multiprocessing import Process, Value
-import time
-import os
 import json
+import os
+import time
+from functools import wraps
+from itertools import cycle
+from multiprocessing import Process, Value
+
 import RPi.GPIO as GPIO
+from flask import Flask, abort, redirect, render_template, request, url_for
+from twilio.request_validator import RequestValidator
 from twilio.rest import Client
 from twilio.twiml.messaging_response import MessagingResponse
-from twilio.request_validator import RequestValidator
 
 app = Flask(__name__)
 
