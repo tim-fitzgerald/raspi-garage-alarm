@@ -34,9 +34,6 @@ for s in SENSORS:
 
 ARMED = False
 
-#isOpen = None
-#oldIsOpen = None
-
 with open("numbers.json") as json_config:
     approved_numbers = json.load(json_config)
 
@@ -139,6 +136,7 @@ def sms():
     elif message_body == "state":
         resp = MessagingResponse()
         states = ""
+        init_sensors()
         for sens in SENSORS:
             states += sens['name'] + ": " + sens['status'] + "\n"
         if ARMED:
